@@ -1,4 +1,17 @@
-﻿using System;
+﻿/*
+ *  These are the serialization classes for the compressed ride data XML files,
+ *  reverse engineered from my own GPS data.  I had used this Windows Phone app when
+ *  it was titled "CycleMaster" back in 2014, hence the namespace and project name.
+ *  
+ *  NOTE:   I cannont guarentee 100% compatibility with your data!
+ *          This app was later renamed by the author from "CycleMaster" to "RunMaster Cycle",
+ *          and alongside this app was a Pedometer version, before both were discontinued.
+ *          While reverse engineering my data files, I suspect that the author used the
+ *          same XML schema for both apps, though I am unable to confirm that.
+ *          If errors occur with your data conversion, message me and let's figure it out together.
+*/
+
+using System;
 using System.Collections.Generic;
 //using System.Xml;
 //using System.Xml.Serialization;
@@ -6,12 +19,12 @@ using System.Collections.Generic;
 namespace CycleMasterDataConverter
 {
     /// <summary>
-    /// first Serializable class for GPS data file
+    /// first Serializable class for the GPS ride data file
     /// </summary>
     [Serializable()]
     public class SerializationStruct
     {
-        // start time field and property
+        // start timestamp field and property
         private DateTime startValue;
         public DateTime startTime
         {
@@ -19,7 +32,7 @@ namespace CycleMasterDataConverter
             set { startValue = value; }
         }
 
-        // end time field and property
+        // end timestamp field and property
         private DateTime endValue;
         public DateTime endTime
         {
@@ -43,7 +56,7 @@ namespace CycleMasterDataConverter
             set { listValue = value; }
         }
 
-        // total or max length of ride pauses in ticks
+        // total or max length of ride pauses in ticks, otherwise 0 if no pauses
         private long pauseValue;
         public long pauseDuration
         {
@@ -51,7 +64,7 @@ namespace CycleMasterDataConverter
             set { pauseValue = value; }
         }
 
-        // stores list of pauses during ride
+        // stores list of pauses during ride, otherwise empty if no pauses
         private List<item> pauseListValue = new List<item>();
         public List<item> pausesList
         {
@@ -92,7 +105,7 @@ namespace CycleMasterDataConverter
 
         private double distValue;
         public double dWalkDistance
-        {
+        {// notice the name of this node, hence why I suspect that the Pedometer app also used this XML schema
             get { return distValue; }
             set { distValue = value; }
         }
@@ -128,7 +141,7 @@ namespace CycleMasterDataConverter
     }
 
     /// <summary>
-    /// stores basic GPS location
+    /// stores basic GPS location data
     /// </summary>
     [Serializable()]
     public class LocationCoord

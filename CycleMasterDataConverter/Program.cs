@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * NOTE:    I still have A LOT of cleanup to do in this class file!  For now, the root data path
+ *          is hard-coded before the MetaData object is created and the CSV export begins.
+ *          My final goal is to add a simple GUI for ease-of-use.  Before that, I want to
+ *          complete the XML export class.
+*/
+
+using System;
 using System.Collections.Generic;
 //using System.Linq;
 //using System.Text;
