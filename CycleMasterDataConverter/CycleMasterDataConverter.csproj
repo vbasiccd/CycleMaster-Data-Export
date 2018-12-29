@@ -52,6 +52,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="SQL Scripts\PostgreSQL\01_create_tables.sql" />
+    <Content Include="SQL Scripts\PostgreSQL\02_import_csv.sql" />
+    <Content Include="SQL Scripts\PostgreSQL\03_build_tcx_track_points.sql" />
+    <Content Include="SQL Scripts\PostgreSQL\04_build_tcx_tracks.sql" />
+    <Content Include="SQL Scripts\PostgreSQL\05_finalize_tcx_tracks.sql" />
+    <Content Include="SQL Scripts\PostgreSQL\06_extract_tcx_files.sql" />
+    <Content Include="SQL Scripts\PostgreSQL\07_export_metadata.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

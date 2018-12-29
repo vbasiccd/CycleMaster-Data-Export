@@ -1,0 +1,3 @@
+\copy cyclemaster.ridemetadata (ride_id,title,distance,start_time_utc,start_time_utc_gpx,end_time_utc,end_time_utc_gpx,duration_seconds,date_and_utc_time,date_and_utc_time_gpx,total_calories_burned,max_speed,weather,course_joy,extra_notes,pause_duration_seconds) FROM 'metadata.csv' DELIMITER ',' QUOTE '"' CSV HEADER
+\copy cyclemaster.ridedata (ride_id,track_id,point_id,time_gathered_utc,time_adjusted_utc,time_adjusted_utc_gpx,latitude,longitude,altitude,horizontal_accuracy,vertical_accuracy,speed,course,distance,calories_burned) FROM 'ridedata.csv' DELIMITER ',' CSV HEADER
+\copy cyclemaster.ridepauses (ride_id,track_id,pkey,duration_seconds,cumm_seconds) FROM 'pausedata.csv' DELIMITER ',' QUOTE '"' CSV HEADER
