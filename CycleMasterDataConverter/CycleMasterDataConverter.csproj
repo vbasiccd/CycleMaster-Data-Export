@@ -59,8 +59,9 @@
     <Content Include="SQL Scripts\PostgreSQL\03_build_tcx_track_points.sql" />
     <Content Include="SQL Scripts\PostgreSQL\04_build_tcx_tracks.sql" />
     <Content Include="SQL Scripts\PostgreSQL\05_finalize_tcx_tracks.sql" />
-    <Content Include="SQL Scripts\PostgreSQL\06_extract_tcx_files.sql" />
+    <Content Include="SQL Scripts\PostgreSQL\06_generate_tcx_export_lines.sql" />
     <Content Include="SQL Scripts\PostgreSQL\07_export_metadata.sql" />
+    <Content Include="SQL Scripts\PostgreSQL\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
