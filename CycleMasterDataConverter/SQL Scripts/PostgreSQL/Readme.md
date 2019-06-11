@@ -1,4 +1,4 @@
-###Preface:
+### Preface:
 
 After much experimentation, I realized to import the majority of this CycleMaster data into Garmin Connect required using Garmin's TCX XML file format.  It would still require manually editing each ride in Garmin Connect, but I would need to do this anyway to modify the title, notes, and assign the proper gear.  My only option to achieve this was to import the CSV files into my PostgreSQL database and use the XML functions to generate the TCX files.
 
@@ -6,7 +6,7 @@ After much experimentation, I realized to import the majority of this CycleMaste
 After generation of the CSV files, use these seven SQL scripts to build and export the TCX files.  Be forewarned, depending on how much ride data you have, THESE SCRIPTS CAN TAKE A LONG TIME!  Case in point, the fourth and fifth SQL scripts took over an hour to complete on my test server.
 
 
-<u>Steps</u>:
+**Steps**:
 
 1. "01_create_tables.sql" - As the name suggests, this script creates the tables needed for importing the CSV files, within a "cyclemaster" schema.  Run this script against a pre-existing database of your choosing, ensuring that the user has schema creation rights.
 
