@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="SQL Scripts\PostgreSQL\Readme.md" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -61,7 +62,6 @@
     <Content Include="SQL Scripts\PostgreSQL\05_finalize_tcx_tracks.sql" />
     <Content Include="SQL Scripts\PostgreSQL\06_generate_tcx_export_lines.sql" />
     <Content Include="SQL Scripts\PostgreSQL\07_export_metadata.sql" />
-    <Content Include="SQL Scripts\PostgreSQL\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
