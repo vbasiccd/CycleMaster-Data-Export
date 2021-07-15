@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycleMasterDataConverter", "CycleMasterDataConverter\CycleMasterDataConverter.csproj", "{216927F6-D238-4203-84AE-DE08826CA008}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CycleMasterDataConverter", "CycleMasterDataConverter\CycleMasterDataConverter.csproj", "{216927F6-D238-4203-84AE-DE08826CA008}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycleLibrary", "CycleLibrary\CycleLibrary.csproj", "{4AE2E1F0-9FD5-4F49-ABDE-B75E7015393E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{216927F6-D238-4203-84AE-DE08826CA008}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{216927F6-D238-4203-84AE-DE08826CA008}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{216927F6-D238-4203-84AE-DE08826CA008}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AE2E1F0-9FD5-4F49-ABDE-B75E7015393E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AE2E1F0-9FD5-4F49-ABDE-B75E7015393E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AE2E1F0-9FD5-4F49-ABDE-B75E7015393E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AE2E1F0-9FD5-4F49-ABDE-B75E7015393E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D34FCDD7-B0BA-4508-A571-F7DB9B70B813}
 	EndGlobalSection
 EndGlobal
