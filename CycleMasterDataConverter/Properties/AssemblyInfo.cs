@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("CycleMasterDataConverter")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Sinclair Community College")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("CycleMasterDataConverter")]
-[assembly: AssemblyCopyright("Copyright © Sinclair Community College 2016")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
