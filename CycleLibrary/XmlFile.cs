@@ -62,8 +62,9 @@ namespace CycleLibrary
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double Altitude { get; set; }
-        public int HorizontalAccuracy { get; set; }
-        public int VerticalAccuracy { get; set; }
+        // CONVERT THE ACCURACTY IN THE SERIALIZATION CLASS FROM INT TO DOUBLE
+        public double HorizontalAccuracy { get; set; }
+        public double VerticalAccuracy { get; set; }
         public double Speed { get; set; }
         public double Course { get; set; }
         public double Distance { get; set; }

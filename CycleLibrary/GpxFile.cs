@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Xml;
 
 namespace CycleLibrary
@@ -83,7 +84,8 @@ namespace CycleLibrary
             }
         }
 
-        public void AddTrackPoint(double latitude, double longitude, double elevation, string gpxTime)
+        public void AddTrackPoint(double latitude, double longitude, double elevation, string gpxTime,
+                                    double hdop, double vdop)
         {
             XmlElement point = _gpxDoc.CreateElement("trkpt");
 
@@ -98,7 +100,46 @@ namespace CycleLibrary
             temp.InnerText = gpxTime;
             point.AppendChild(temp);
 
+            temp = _gpxDoc.CreateElement("hdop");
+            temp.InnerText = hdop.ToString();
+            point.AppendChild(temp);
+
+            temp = _gpxDoc.CreateElement("vdop");
+            temp.InnerText = vdop.ToString();
+            point.AppendChild(temp);
+
+            temp = _gpxDoc.CreateElement("sym");
+            temp.InnerText = "Waypoint";
+            point.AppendChild(temp);
+
             _trackSegment.AppendChild(point);
+        }
+
+        public void WriteGpxFile(string filePath)
+        {
+            if (_trackSegment != null)
+            {
+                FinishTrackSegment();
+            }
+
+            if (_track != null)
+            {
+                FinishTrack();
+            }
+
+            using (TextWriter fileWriter = new StreamWriter(filePath))
+            {
+                _gpxDoc.Save(fileWriter);
+            }
+        }
+
+        public void ResetGpx()
+        {
+            _trackSegment = null;
+            _track = null;
+            _root = null;
+
+            _gpxDoc = new XmlDocument();
         }
     }
 }
