@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CycleLibrary
 {
@@ -14,7 +13,7 @@ namespace CycleLibrary
 
         public Metadata RideMetadata { get; set; }
 
-        public TrackSegment RideTracks { get; set; }
+        public List<TrackSegment> RideTracks { get; set; }
     }
 
 
@@ -48,7 +47,7 @@ namespace CycleLibrary
         }
 
 
-        public TrackPoint SegmentPoints { get; set; }
+        public List<TrackPoint> SegmentPoints { get; set; }
     }
 
     public class TrackPoint
@@ -59,7 +58,15 @@ namespace CycleLibrary
         }
 
 
-        //"ride_id,track_id,point_id,time_gathered_utc,time_adjusted_utc,time_adjusted_utc_gpx,latitude,longitude,altitude," +
-                                //"horizontal_accuracy,vertical_accuracy,speed,course,distance,calories_burned"
+        public DateTime PointTimeUtc { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double Altitude { get; set; }
+        public int HorizontalAccuracy { get; set; }
+        public int VerticalAccuracy { get; set; }
+        public double Speed { get; set; }
+        public double Course { get; set; }
+        public double Distance { get; set; }
+        public double CaloriesBurned { get; set; }
     }
 }
