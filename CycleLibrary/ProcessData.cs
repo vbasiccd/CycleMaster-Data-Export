@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CycleLibrary
 {
-    public static class ReferenceTables
+    public static class ProcessData
     {
         public static Dictionary<int, string> weather = new Dictionary<int, string>()
         {
