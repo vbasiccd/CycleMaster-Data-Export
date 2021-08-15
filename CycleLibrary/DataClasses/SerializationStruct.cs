@@ -167,9 +167,9 @@ namespace CycleLibrary.DataClasses
 
         private double _altitude;
 
-        private int _horizontalAccuracy;
+        private double _horizontalAccuracy;
 
-        private int _verticalAccuracy;
+        private double _verticalAccuracy;
 
         private double _speed;
 
@@ -194,13 +194,13 @@ namespace CycleLibrary.DataClasses
             set => _altitude = value;
         }
 
-        public int HorizontalAccuracy
+        public double HorizontalAccuracy
         {
             get => _horizontalAccuracy;
             set => _horizontalAccuracy = value;
         }
 
-        public int VerticalAccuracy
+        public double VerticalAccuracy
         {
             get => _verticalAccuracy;
             set => _verticalAccuracy = value;
