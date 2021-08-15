@@ -48,16 +48,23 @@ namespace CycleLibrary
         public string RideID { get; set; }
         public string Title { get; set; }
         public double Distance { get; set; }
+
         public DateTime StartTimeLocal { get; set; }
         public DateTime StartTimeUtc { get; set; }
         public string StartTimeUtcString { get; set; }
+
         public DateTime EndTimeLocal { get; set; }
         public DateTime EndTimeUtc { get; set; }
         public string EndTimeUtcString { get; set; }
+
         public int DurationSeconds { get; set; }
+        public int PauseSeconds { get; set; }
+        public int TotalSeconds { get => DurationSeconds + PauseSeconds; }
+
         public DateTime RideDateTimeLocal { get; set; }
         public DateTime RideDateTimeUtc { get; set; }
         public string RideDateTimeUtcString { get; set; }
+
         public int TotalCaloriesBurned { get; set; }
         public double MaxSpeed { get; set; }
         public string Weather { get; set; }
