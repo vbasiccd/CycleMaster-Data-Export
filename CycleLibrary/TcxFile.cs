@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml;
 
 namespace CycleLibrary
@@ -12,9 +9,23 @@ namespace CycleLibrary
         private XmlElement _root;
         private XmlElement _activity;
 
-        public TcxFile()
-        {
+        private string _creatorName;
+        private string _langID;
+        private int _versionMajor;
+        private int _versionMinor;
+        private int _buildMajor;
+        private int _buildMinor;
 
+
+        public TcxFile(string creatorName = "CycleMaster", string langID = "en",
+                        int versionMajor = 3, int versionMinor = 2, int buildMajor = 0, int buildMinor = 0)
+        {
+            _creatorName = creatorName;
+            _langID = langID;
+            _versionMajor = versionMajor;
+            _versionMinor = versionMinor;
+            _buildMajor = buildMajor;
+            _buildMinor = buildMinor;
         }
 
         public void PopulateTCX(ref XmlFile rideFile)
@@ -39,10 +50,7 @@ namespace CycleLibrary
 
         public void WriteTcxFile(string filePath)
         {
-            using (TextWriter fileWriter = new StreamWriter(filePath))
-            {
-                _tcxDoc.Save(fileWriter);
-            }
+            FileIO.WriteXmlFile(ref _tcxDoc, filePath);
         }
 
         public void ResetTcx()
@@ -77,8 +85,7 @@ namespace CycleLibrary
             _tcxDoc.AppendChild(_root);
         }
 
-        private void FinalizeDocument(string creatorName = "CycleMaster", string langID = "en",
-                                        int versionMajor = 3, int versionMinor = 2, int buildMajor = 0, int buildMinor = 0)
+        private void FinalizeDocument()
         {
             // the "Creator" node at the end of the "Activity" node
 
@@ -92,11 +99,11 @@ namespace CycleLibrary
             XmlElement build_major = _tcxDoc.CreateElement("BuildMajor");
             XmlElement build_minor = _tcxDoc.CreateElement("BuildMinor");
 
-            creator_name.InnerText = creatorName;
-            version_major.InnerText = versionMajor.ToString();
-            version_minor.InnerText = versionMinor.ToString();
-            build_major.InnerText = buildMajor.ToString();
-            build_minor.InnerText = buildMinor.ToString();
+            creator_name.InnerText = _creatorName;
+            version_major.InnerText = _versionMajor.ToString();
+            version_minor.InnerText = _versionMinor.ToString();
+            build_major.InnerText = _buildMajor.ToString();
+            build_minor.InnerText = _buildMinor.ToString();
 
             creator_version.AppendChild(version_major);
             creator_version.AppendChild(version_minor);
@@ -118,7 +125,7 @@ namespace CycleLibrary
             build.AppendChild(creator_version);
 
             XmlElement lang = _tcxDoc.CreateElement("LangID");
-            lang.InnerText = langID;
+            lang.InnerText = _langID;
 
             author.AppendChild(creator_name);
             author.AppendChild(build);
