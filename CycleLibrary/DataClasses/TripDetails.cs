@@ -33,7 +33,7 @@ namespace CycleLibrary.DataClasses
 
         private double _distance;
 
-        private ulong _durationTicks;
+        private long _durationTicks;
 
         private DateTime _dateOfRoute;
 
@@ -64,7 +64,7 @@ namespace CycleLibrary.DataClasses
             set => _distance = value;
         }
 
-        public ulong DurationTicks
+        public long DurationTicks
         {
             get => _durationTicks;
             set => _durationTicks = value;
