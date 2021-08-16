@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Xml;
 
 namespace CycleLibrary
@@ -11,31 +10,64 @@ namespace CycleLibrary
         private XmlElement _track;
         private XmlElement _trackSegment;
 
+        private string _creatorName;
 
-        public GpxFile()
+
+        public GpxFile(string creatorName = "CycleMaster 3.2")
         {
-
+            _creatorName = creatorName;
         }
 
-        public void InitializeDocument(string creatorName = "CycleMaster 3.2")
+        public void PopulateGPX(ref XmlFile rideFile)
+        {
+            InitializeDocument(rideFile.RideMetadata.StartTimeUtcString);
+
+            string descString = $"Title: {rideFile.RideMetadata.Title}; ";
+            descString += $"Notes: {rideFile.RideMetadata.ExtraNotes}; ";
+            descString += $"Course Joy: {rideFile.RideMetadata.CourseJoy}; ";
+            descString += $"Weather: {rideFile.RideMetadata.Weather}";
+
+            AddTrack(trackName: rideFile.RideMetadata.Title, description: descString);
+
+            AddTrackSegments(rideFile.RideTracks);
+
+            _root.AppendChild(_track);
+        }
+
+        public void WriteGpxFile(string filePath)
+        {
+            FileIO.WriteXmlFile(ref _gpxDoc, filePath);
+        }
+
+        public void ResetGpx()
+        {
+            _trackSegment = null;
+            _track = null;
+            _root = null;
+
+            _gpxDoc = new XmlDocument();
+        }
+
+        private void InitializeDocument(string startTime)
         {
             _root = _gpxDoc.CreateElement("gpx");
             _root.SetAttribute("version", "1.1");
-            _root.SetAttribute("creator", creatorName);
+            _root.SetAttribute("creator", _creatorName);
             _root.SetAttribute("xmlns", "http://www.topografix.com/GPX/1/1");
             _root.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
             _root.SetAttribute("xsi:schemaLocation", "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd");
 
+            XmlElement metadata = _gpxDoc.CreateElement("metadata");
+            XmlElement time = _gpxDoc.CreateElement("time");
+            time.InnerText = startTime;
+            metadata.AppendChild(time);
+            _root.AppendChild(metadata);
+
             _gpxDoc.AppendChild(_root);
         }
 
-        public void AddTrack(string trackName, string description = null, string trackType = "cycling")
+        private void AddTrack(string trackName, string description = null, string trackType = "cycling")
         {
-            if (_track != null)
-            {
-                FinishTrack();
-            }
-
             _track = _gpxDoc.CreateElement("trk");
 
             XmlElement temp = _gpxDoc.CreateElement("name");
@@ -54,58 +86,44 @@ namespace CycleLibrary
             _track.AppendChild(temp);
         }
 
-        public void FinishTrack()
+        private void AddTrackSegments(List<TrackSegment> rideTracks)
         {
-            if (_track != null)
+            foreach(TrackSegment segment in rideTracks)
             {
-                _root.AppendChild(_track);
+                _trackSegment = _gpxDoc.CreateElement("trkseg");
 
-                _track = null;
-            }
-        }
+                foreach (TrackPoint point in segment.SegmentPoints)
+                {
+                    AddTrackPoint(point);
+                }
 
-        public void AddTrackSegment()
-        {
-            if (_trackSegment != null)
-            {
-                FinishTrackSegment();
-            }
-
-            _trackSegment = _gpxDoc.CreateElement("trkseg");
-        }
-
-        public void FinishTrackSegment()
-        {
-            if (_trackSegment != null)
-            {
                 _track.AppendChild(_trackSegment);
 
                 _trackSegment = null;
             }
         }
 
-        public void AddTrackPoint(double latitude, double longitude, double elevation, string gpxTime,
-                                    double hdop, double vdop)
+        private void AddTrackPoint(TrackPoint trackPoint)
         {
             XmlElement point = _gpxDoc.CreateElement("trkpt");
 
-            point.SetAttribute("lat", latitude.ToString());
-            point.SetAttribute("lon", longitude.ToString());
+            point.SetAttribute("lat", trackPoint.Latitude.ToString());
+            point.SetAttribute("lon", trackPoint.Longitude.ToString());
 
             XmlElement temp = _gpxDoc.CreateElement("ele");
-            temp.InnerText = elevation.ToString();
+            temp.InnerText = trackPoint.Altitude.ToString();
             point.AppendChild(temp);
 
             temp = _gpxDoc.CreateElement("time");
-            temp.InnerText = gpxTime;
+            temp.InnerText = trackPoint.PointTimeUtcString;
             point.AppendChild(temp);
 
             temp = _gpxDoc.CreateElement("hdop");
-            temp.InnerText = hdop.ToString();
+            temp.InnerText = trackPoint.HorizontalAccuracy.ToString();
             point.AppendChild(temp);
 
             temp = _gpxDoc.CreateElement("vdop");
-            temp.InnerText = vdop.ToString();
+            temp.InnerText = trackPoint.VerticalAccuracy.ToString();
             point.AppendChild(temp);
 
             temp = _gpxDoc.CreateElement("sym");
@@ -113,33 +131,6 @@ namespace CycleLibrary
             point.AppendChild(temp);
 
             _trackSegment.AppendChild(point);
-        }
-
-        public void WriteGpxFile(string filePath)
-        {
-            if (_trackSegment != null)
-            {
-                FinishTrackSegment();
-            }
-
-            if (_track != null)
-            {
-                FinishTrack();
-            }
-
-            using (TextWriter fileWriter = new StreamWriter(filePath))
-            {
-                _gpxDoc.Save(fileWriter);
-            }
-        }
-
-        public void ResetGpx()
-        {
-            _trackSegment = null;
-            _track = null;
-            _root = null;
-
-            _gpxDoc = new XmlDocument();
         }
     }
 }
