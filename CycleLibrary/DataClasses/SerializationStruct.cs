@@ -82,8 +82,56 @@ namespace CycleLibrary.DataClasses
     [Serializable()]
     public partial class item
     {
-        public List<int> key { get; set; }
-        public List<long> value { get; set; }
+        private ItemKey _key;
+
+        private ItemValue _value;
+
+
+        public ItemKey key
+        {
+            get => _key;
+            set => _key = value;
+        }
+
+        public ItemValue value
+        {
+            get => _value;
+            set => _value = value;
+        }
+    }
+
+
+    /// <summary>
+    /// Coordinate key where the pause occurred.
+    /// </summary>
+    [Serializable()]
+    public partial class ItemKey
+    {
+        private int _int;
+
+
+        public int @int
+        {
+            get => _int;
+            set => _int = value;
+        }
+    }
+
+
+    /// <summary>
+    /// Duration of the pause in ticks.
+    /// </summary>
+    [Serializable()]
+    public partial class ItemValue
+    {
+        private long _long;
+
+        
+        public long @long
+        {
+            get => _long;
+            set => _long = value;
+        }
     }
 
 
