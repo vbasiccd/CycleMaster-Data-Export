@@ -89,19 +89,17 @@ namespace CycleLibrary
 
                     extract.RideMetadata.StartTimeLocal = rideData.startTime;
                     extract.RideMetadata.StartTimeUtc = rideData.startTime.ToUniversalTime();
-                    extract.RideMetadata.StartTimeUtcString = extract.RideMetadata.StartTimeUtc.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                    extract.RideMetadata.StartTimeUtcString = TimeToXmlString(extract.RideMetadata.StartTimeUtc);
                     extract.RideMetadata.EndTimeLocal = rideData.endTime;
                     extract.RideMetadata.EndTimeUtc = rideData.endTime.ToUniversalTime();
-                    extract.RideMetadata.EndTimeUtcString = extract.RideMetadata.EndTimeUtc.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                    extract.RideMetadata.EndTimeUtcString = TimeToXmlString(extract.RideMetadata.EndTimeUtc);
 
-                    DateTime pauseTicks = new DateTime(rideData.pauseDuration);
-                    DateTime durationTicks = new DateTime(_trips[i].DurationTicks);
-                    extract.RideMetadata.DurationSeconds = durationTicks.Hour * 3600 + durationTicks.Minute * 60 + durationTicks.Second;
-                    extract.RideMetadata.PauseSeconds = pauseTicks.Hour * 3600 + pauseTicks.Minute * 60 + pauseTicks.Second;
+                    extract.RideMetadata.DurationSeconds = TicksToSeconds(_trips[i].DurationTicks);
+                    extract.RideMetadata.PauseSeconds = TicksToSeconds(rideData.pauseDuration);
 
                     extract.RideMetadata.RideDateTimeLocal = _trips[i].DateOfRoute;
                     extract.RideMetadata.RideDateTimeUtc = _trips[i].DateOfRoute.ToUniversalTime();
-                    extract.RideMetadata.RideDateTimeUtcString = extract.RideMetadata.RideDateTimeUtc.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                    extract.RideMetadata.RideDateTimeUtcString = TimeToXmlString(extract.RideMetadata.RideDateTimeUtc);
 
                     extract.RideMetadata.TotalCaloriesBurned = _trips[i].CaloriesBurned;
                     extract.RideMetadata.MaxSpeed = rideData.dMaxSpeed;
@@ -109,9 +107,37 @@ namespace CycleLibrary
                     extract.RideMetadata.CourseJoy = _trips[i].CourseJoy;
                     extract.RideMetadata.ExtraNotes = _trips[i].ExtraNotes;
 
-                    // process pauses
+                    // Prepare the pause data, if needed.
+                    int pauseSeconds = 0;
+                    List<int> pauseKeys = new List<int>();
+                    List<int> pauseDuration = new List<int>();
+                    if (rideData.pausesList.Count > 0)
+                    {
+                        foreach (item ridePause in rideData.pausesList)
+                        {
+                            if (ridePause.value.@long > 0)
+                            {
+                                pauseSeconds += TicksToSeconds(ridePause.value.@long);
+
+                                pauseKeys.Add(ridePause.key.@int + 1);
+                                pauseDuration.Add(pauseSeconds);
+                            }
+                        }
+                    }
                 }
             }
+        }
+
+        private int TicksToSeconds(long ticks)
+        {
+            DateTime timeTicks = new DateTime(ticks);
+
+            return timeTicks.Hour * 3600 + timeTicks.Minute * 60 + timeTicks.Second;
+        }
+
+        private string TimeToXmlString(DateTime UtcTime)
+        {
+            return UtcTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
         }
     }
 }
