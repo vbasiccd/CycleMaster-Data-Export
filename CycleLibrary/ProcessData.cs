@@ -111,18 +111,72 @@ namespace CycleLibrary
                     int pauseSeconds = 0;
                     List<int> pauseKeys = new List<int>();
                     List<int> pauseDuration = new List<int>();
+
+                    // if the ride was paused at least once...
                     if (rideData.pausesList.Count > 0)
                     {
+                        // ...then for each pause...
                         foreach (item ridePause in rideData.pausesList)
                         {
+                            // ...if the length of the pause was greater than zero...
                             if (ridePause.value.@long > 0)
                             {
+                                // ...then convert the pause ticks to seconds
                                 pauseSeconds += TicksToSeconds(ridePause.value.@long);
 
-                                pauseKeys.Add(ridePause.key.@int + 1);
+                                // add the pause key and seconds to the Lists
+                                pauseKeys.Add(ridePause.key.@int);
                                 pauseDuration.Add(pauseSeconds);
+
+                                // add a new track to the XmlFile object
+                                extract.RideTracks.Add(new TrackSegment());
                             }
                         }
+                    }
+                    // ...otherwise there were no pauses...
+                    else
+                    {
+                        // ...so just add a single track to the XmlFile object
+                        extract.RideTracks.Add(new TrackSegment());
+                    }
+
+                    // Populate the ride data.
+                    for(int c = 0; c < rideData.coordsList.Count; c++)
+                    {
+                        PathCoord coord = rideData.coordsList[c];
+
+                        DateTime coordTime = coord.timeGathered;
+                        int secondsToAdd = 0;
+
+                        int trackId = 0;
+
+                        for (int j = pauseKeys.Count - 1; j >= 0; j--)
+                        {
+                            if (c > pauseKeys[j])
+                            {
+                                trackId = j;
+                                secondsToAdd = pauseDuration[j];
+                                break;
+                            }
+                        }
+
+                        coordTime = coordTime.AddSeconds(secondsToAdd);
+
+                        TrackPoint coordPoint = new TrackPoint();
+                        coordPoint.PointTimeLocal = coordTime;
+                        coordPoint.PointTimeUtc = coordTime.ToUniversalTime();
+                        coordPoint.PointTimeUtcString = TimeToXmlString(coordPoint.PointTimeUtc);
+                        coordPoint.Latitude = coord.coord.Location.Latitude;
+                        coordPoint.Longitude = coord.coord.Location.Longitude;
+                        coordPoint.Altitude = coord.coord.Location.Altitude;
+                        coordPoint.HorizontalAccuracy = coord.coord.Location.HorizontalAccuracy;
+                        coordPoint.VerticalAccuracy = coord.coord.Location.VerticalAccuracy;
+                        coordPoint.Speed = coord.coord.Location.Speed;
+                        coordPoint.Course = coord.coord.Location.Course;
+                        coordPoint.Distance = coord.dWalkDistance;
+                        coordPoint.CaloriesBurned = coord.dCalories;
+
+                        extract.RideTracks[trackId].SegmentPoints.Add(coordPoint);
                     }
                 }
             }
