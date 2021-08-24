@@ -69,6 +69,16 @@ namespace CycleLibrary
             }
         }
 
+        public static void WriteTextFile(string fileContents, string filePath, bool isAppend = false)
+        {
+            // NEED TO ADD A TRY-CATCH
+
+            using (TextWriter file = new StreamWriter(filePath, isAppend))
+            {
+                file.WriteLine(fileContents);
+            }
+        }
+
         public static string MergeTwoPathParts(string firstPart, string secondPart)
         {
             return Path.Combine(firstPart, secondPart);
