@@ -90,5 +90,10 @@ namespace CycleLibrary
 
             return File.Exists(path);
         }
+
+        public static bool FolderExists(string folderPath)
+        {
+            return Directory.Exists(folderPath);
+        }
     }
 }
