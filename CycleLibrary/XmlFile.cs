@@ -1,6 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
+/*
+ * This is a basic XML schema that stores all the data for a trip
+ * after extraction and conversion.
+ * Each trip will be converted to this XML schema. The other conversions
+ * will pull data from this converted file.
+*/
+
+
 namespace CycleLibrary
 {
     public class XmlFile
@@ -15,10 +24,16 @@ namespace CycleLibrary
 
         public List<TrackSegment> RideTracks { get; set; }
 
+        /// <summary>
+        /// Generate a file name using the ride ID and provided extension.
+        /// </summary>
+        /// <param name="extensionNoDot">file extension without period</param>
+        /// <returns>ride ID file name with extension</returns>
         public string GetFileName(string extensionNoDot)
         {
             string output;
 
+            // to be safe, check if the period exists
             if (extensionNoDot.StartsWith("."))
             {
                 output = extensionNoDot.Substring(1);
@@ -37,6 +52,13 @@ namespace CycleLibrary
     }
 
 
+    /// <summary>
+    /// Class to store the metadata for the trip.
+    /// The "UtcString" variables stores the DateTimes as formatted strings
+    /// needed for the GPX and TCX exports.
+    /// The "CourseJoy" variable was a star rating in the phone app. Can't remember
+    /// nor find if it was out of 4 or 5 stars.
+    /// </summary>
     public class Metadata
     {
         public Metadata()
@@ -72,6 +94,10 @@ namespace CycleLibrary
         public string ExtraNotes { get; set; }
     }
 
+    /// <summary>
+    /// Multiple track segments are possible if the trip was paused in the phone app.
+    /// Otherwise, there will be only one track segment.
+    /// </summary>
     public class TrackSegment
     {
         public TrackSegment()
@@ -83,6 +109,11 @@ namespace CycleLibrary
         public List<TrackPoint> SegmentPoints { get; set; }
     }
 
+    /// <summary>
+    /// Stores data for each GPS track point.
+    /// The "UtcString" variable stores the DateTime as a formatted string,
+    /// needed for the GPX and TCX exports.
+    /// </summary>
     public class TrackPoint
     {
         public TrackPoint()

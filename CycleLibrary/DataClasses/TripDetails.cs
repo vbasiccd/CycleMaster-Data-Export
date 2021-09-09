@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace CycleLibrary.DataClasses
 {
+    /// <summary>
+    /// Root serialization class.
+    /// </summary>
     [Serializable()]
     [System.Xml.Serialization.XmlRoot("ArrayOfTripDetailsItem")]
     public partial class TripDetails
@@ -24,6 +27,9 @@ namespace CycleLibrary.DataClasses
     }
 
 
+    /// <summary>
+    /// Class to store the metadata for each trip after deserialization.
+    /// </summary>
     [Serializable()]
     public partial class TripDetailsItem
     {

@@ -178,7 +178,7 @@ namespace CycleLibrary.DataClasses
 
 
     /// <summary>
-    /// This class stores location data and an empty timestamp. A possible future features?
+    /// This class stores location data and an empty timestamp. A possible future feature?
     /// </summary>
     [Serializable()]
     public partial class coordUnit

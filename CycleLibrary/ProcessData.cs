@@ -1,13 +1,22 @@
 ﻿using CycleLibrary.DataClasses;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
+
+
+/*
+ * This class performs the heavy lifting of deserializing, extracting,
+ * and converting each trip data file to a simple XML schema.
+ * 
+ * The trips.dat metadata file is a plain XML file, whereas the DAT files for the
+ * recorded trips are gzip compressed serialized XML files.
+ */
+
 
 namespace CycleLibrary
 {
     public class ProcessData
     {
+        // needed to convert the weather ID in the ride data file
         private Dictionary<int, string> _weather = new Dictionary<int, string>()
         {
             { 0,"Sunny" },
