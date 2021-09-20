@@ -76,6 +76,50 @@ namespace CycleLibrary.DataClasses
     }
 
 
+    /*
+     * Here is an "pausesList" example from one of my rides.
+     * 
+          <pausesList>
+            <item>
+              <key>
+                <int>959</int>
+              </key>
+              <value>
+                <long>477250053</long>
+              </value>
+            </item>
+            <item>
+              <key>
+                <int>4294</int>
+              </key>
+              <value>
+                <long>1255932713</long>
+              </value>
+            </item>
+            <item>
+              <key>
+                <int>5470</int>
+              </key>
+              <value>
+                <long>11398298710</long>
+              </value>
+            </item>
+            <item>
+              <key>
+                <int>6508</int>
+              </key>
+              <value>
+                <long>11897408043</long>
+              </value>
+            </item>
+          </pausesList>
+    *
+    * Notice the design of the "item" node.  It suggests that the "item" class contains an integer List object
+    * for the "key", and a long List object for the "value".  But, from this it appears that "key" and "value"
+    * will always have only one number in their respective List objects, so why incur that overhead?
+    * Obviously, there is more in the author's original class than we can glean from the data.
+    */
+
     /// <summary>
     /// This class stores the list of pauses.
     /// </summary>
